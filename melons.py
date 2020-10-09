@@ -1,3 +1,6 @@
+from random import randint
+from datetime import datetime
+
 """Classes for melon orders."""
 class AbstractMelonOrder():
 
@@ -16,14 +19,29 @@ class AbstractMelonOrder():
 
         self.is_shipped = True
     
+    def get_base_price(self):
+        base_price = randint(5, 9)
+        rush_start_time = datetime(2020, 10, 9, 8, 00, 00)
+        rush_end_time = datetime(2020, 10, 9, 23, 00, 00 )
+        current_time = datetime.now()
+        print(current_time)
+        print(base_price)
+        if current_time > rush_start_time and current_time < rush_end_time :
+            base_price = base_price + 4
+            print("rush hour- base price:", base_price)
+
+        return base_price
+
 
     def get_total(self):
         """Calculate price, including tax."""
 
+
+        base_price = self.get_base_price()
+
         if self.species == "Christmas melon":
-            base_price = 7.5
-        else:
-            base_price = 5
+            base_price = 1.5 * base_price
+       
 
         total = (1 + self.tax) * self.qty * base_price
 
